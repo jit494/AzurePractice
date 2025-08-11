@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+#bin
+
+
 # dotenv files
 .env
 
@@ -64,6 +67,7 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+obj/
 
 # Tye
 .tye/
