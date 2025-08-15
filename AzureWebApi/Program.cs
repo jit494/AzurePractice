@@ -47,6 +47,8 @@ app.MapGet("/stagingtest", () =>$"Staging Test: {Greetings}");
 
 app.MapGet("/", () => Greetings).WithName("GetGreetings").WithOpenApi();
 
+app.MapGet("/products", async (AppDbContext db) => db.Products.ToListAsync());
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
