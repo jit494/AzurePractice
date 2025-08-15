@@ -53,6 +53,7 @@ app.MapGet("/products", async (HttpContext context) =>
     {
         var db = context.RequestServices.GetRequiredService<AppDbContext>();
         var products = await db.Products.ToListAsync();
+        Console.WriteLine($"Fetched {products.Count} products from the database.");
         return Results.Ok(products);
     }
     catch (Exception ex) {
