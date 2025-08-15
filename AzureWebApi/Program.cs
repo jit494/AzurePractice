@@ -47,12 +47,13 @@ app.MapGet("/stagingtest", () =>$"Staging Test: {Greetings}");
 
 app.MapGet("/", () => Greetings).WithName("GetGreetings").WithOpenApi();
 
-app.MapGet("/products", async (HttpContext context) =>
+app.MapGet("/products", async (HttpContext context, ILogger<Program> logger) =>
 {
     try
     {
         var db = context.RequestServices.GetRequiredService<AppDbContext>();
         var products = await db.Products.ToListAsync();
+        logger.LogInformation("Fetched {Count} products from the database.", products.Count);
         Console.WriteLine($"Fetched {products.Count} products from the database.");
         return Results.Ok(products);
     }
