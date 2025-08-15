@@ -47,7 +47,19 @@ app.MapGet("/stagingtest", () =>$"Staging Test: {Greetings}");
 
 app.MapGet("/", () => Greetings).WithName("GetGreetings").WithOpenApi();
 
-app.MapGet("/products", async (AppDbContext db) => db.Products.ToListAsync());
+app.MapGet("/products", async (HttpContext context) =>
+{
+    try
+    {
+        var db = context.RequestServices.GetRequiredService<AppDbContext>();
+        var products = await db.Products.ToListAsync();
+        return Results.Ok(products);
+    }
+    catch (Exception ex) {
+        Console.WriteLine($"Error fetching products: {ex.Message}");
+        return Results.Problem(ex.Message);
+    }
+});
 
 app.Run();
 
